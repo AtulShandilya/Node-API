@@ -34,6 +34,7 @@ const writeFile=(fileName,dirName,fileObj)=>{
         filePath=(path.join(__dirname,'file',fileName))
     }else {
         filePath=(path.join(__dirname,'file',dirName,fileName))
+        console.log("filepath:",filePath)
     }
     if(fileName==''){
         return ["File Name is Incorrect!!",1]
@@ -41,9 +42,11 @@ const writeFile=(fileName,dirName,fileObj)=>{
         try{
             const fileBuffer=JSON.stringify(fileObj);
             fs.writeFileSync(filePath,fileBuffer);
-            return [(fileBuffer),0];
+            const rtn = '{"returnCode":0,"returnObj":'+fileBuffer.toString()+'}'
+            return rtn;
         } catch(err){
-            return[err,2];
+            console.log("error:",err)
+            return '{"returnCode":2,"returnObj":" Error !! check server log"}'
         }
     }
 }
